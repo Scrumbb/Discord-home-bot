@@ -1,0 +1,14 @@
+{
+  "name": "discord-home-bot",
+  "version": "1.0.0",
+  "description": "A discord bot to automate functionality of my home servers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Scrumb",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.15.3"
+  }
+}
