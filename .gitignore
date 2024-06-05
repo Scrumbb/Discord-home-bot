@@ -2,7 +2,7 @@
 config.json
 
 # Private key
-privatekey/id_rsa
+*id_rsa
 
 # Logs
 logs
