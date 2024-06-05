@@ -3,7 +3,7 @@ const path = require('node:path');
 const { Client } = require('ssh2');
 
 // Path to your private key file
-const privateKeyPath = path.join(__dirname, 'privatekey', 'id_rsa');
+const privateKeyPath = path.join(__dirname, 'id_rsa');
 const privateKey = fs.readFileSync(privateKeyPath);
 
 // SSH connection configuration

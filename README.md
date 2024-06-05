@@ -7,7 +7,7 @@ Installation:
     - Install nodejs
     - Clone the repository at "https://github.com/Scrumbb/Discord-home-bot.git"
     - Create a "config.json" file
-    - Add the private key file ('id_rsa') inside the 'privatekey' folder
+    - Add the private key file ('id_rsa') on the project root
     - Run npm install to install the necessary modules
 
 Server side:
