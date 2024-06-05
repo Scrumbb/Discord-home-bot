@@ -1,6 +1,9 @@
 # TOKEN
 config.json
 
+# Private key
+privatekey/id_rsa
+
 # Logs
 logs
 *.log
