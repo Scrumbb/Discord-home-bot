@@ -9,7 +9,7 @@
 
 /* 
 ---------------------------------------------------------------------------------------------
------ All the responses must be formated in a way that '\v' separates diferent servers
+----- All the responses must be formated in a way that '\v\v\v' separates diferent servers
 ----- and '\t\t\t' separates diferent partes of the server response.
 ---------------------------------------------------------------------------------------------
  */
@@ -34,12 +34,15 @@ function responseFormater(response, multipleServers) {
                 response = '```';
             }
         });
+
     } else {
         if (response.length < 1900) {
             return [response += '```'];
         }
+
         responseArray = responseArray.concat(splitSingleServer(response));
     }
+
     return responseArray;
 }
 
@@ -49,8 +52,6 @@ function splitSingleServer(response) {
 
     const zonesArray = response.split('\t\t\t');
     response = '';
-
-    console.log(zonesArray);
 
     zonesArray.forEach((zone) => {
         if (zone.length < 1900) {

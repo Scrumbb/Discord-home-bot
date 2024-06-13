@@ -38,31 +38,6 @@ module.exports = {
 					console.log('Error:', err.message);
 					response += err.message;
 				});
-			//response += '```';
-
-			/* 
-			if (response.length > 1900) {
-
-				const linesArray = response.split('\n');
-				response = '';
-
-				linesArray.forEach((line) => {
-					if ((response + line).length > 1900) {
-						response += '```';
-						interaction.followUp(`${response}`);
-						response = '```';
-						response += line;
-						response += '\n';
-					} else {
-						response += line;
-						response += '\n';
-					}
-				});
-
-			}
-			//response += '```';
-			await interaction.followUp(`${response}`); 
-			*/
 
 			try {
 				const responseArray = responseFormater(response, false);
@@ -85,29 +60,6 @@ module.exports = {
 					console.error('Error:', err.message);
 					response += err;
 				});
-			//response += '```';
-			/* 
-			if (response.length > 1900) {
-			
-				const linesArray = response.split('\n');
-				response = '';
-			
-				linesArray.forEach((line) => {
-					if ((response + line).length > 1900) {
-						response += '```';
-						interaction.followUp(`${response}`);
-						response = '```';
-						response += line;
-						response += '\n';
-					} else {
-						response += line;
-						response += '\n';
-					}
-				});
-			}
-			//response += '```';
-			await interaction.followUp(`${response}`);
-			 */
 
 			try {
 				const responseArray = responseFormater(response, false);
@@ -130,7 +82,7 @@ module.exports = {
 					console.log('Error:', err.message);
 					response += err.message;
 				});
-			response += '\v';
+			response += '\v\v\v';
 
 			await executeRemoteCommand('10.0.0.150', 22, 'bot', privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
 				.then(output => {
@@ -140,46 +92,6 @@ module.exports = {
 					console.log('Error:', err.message);
 					response += err.message;
 				});
-
-			//response += '```';
-			/* 
-			if (response.length > 1800) {
-
-				const serversArray = response.split('\v');
-				response = '';
-			
-				serversArray.forEach((server) => {
-					if (server.length > 1900) {
-						response += '```';
-						interaction.followUp(`${response}`);
-						response = '```';
-						response += server;
-						response += '\n';
-					} else {
-						response += '```';
-						interaction.followUp(`${response}`);
-					}
-				});
-			
-				const linesArray = response.split('\n');
-				response = '';
-			
-				linesArray.forEach((line) => {
-					if ((response + line).length > 1500) {
-						response += '```';
-						interaction.followUp(`${response}`);
-						response = '```';
-						response += line;
-						response += '\n';
-					} else {
-						response += line;
-						response += '\n';
-					}
-				});
-			}
-			response += '```';
-			await interaction.followUp(`${response}`); 
-			*/
 
 			try {
 				const responseArray = responseFormater(response, true);
