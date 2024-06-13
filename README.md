@@ -16,8 +16,9 @@ Server side:
         - sudo usermod -aG sudo bot
         - sudo usermod -aG docker bot
         - newgrp docker
-        - sudo visudo:
+        - sudo visudo
             - Add on the last line 'bot ALL=(ALL:ALL) NOPASSWD: ALL
+            
     - Upload the public key for the bot:
         - su - bot (to run the commands as bot)
         - mkdir -p ~/.ssh
@@ -27,17 +28,17 @@ Server side:
 
 
 Development:
-    - Every time a nem slash command is created, run "node deploy-commands.js"
-    - To delete a slash command, first go to te server and retrieve te command id, then replace the 'commandid' in 'remove-commands.js' and run 'node remove-commands.js'
-    - To delete all the slash commands run 'node remove-all-commands.js'
+    - Every time a nem slash command is created, run "node deployCommands.js"
+    - To delete a slash command, first go to te server and retrieve te command id, then replace the 'commandid' in 'removeCommands.js' and run 'node removeCommands.js'
+    - To delete all the slash commands run 'node removeAllCommands.js'
 
 
 Commands to develop:
     - Docker:
-        - ls (pi5, ubuntu) -> Lists the containers on all the serveres or a specified server
+        - DONE -> ls (pi5, ubuntu) -> Lists the containers on all the serveres or a specified server
         - restart ((name of container)) -> Restart a specified contariner
         - stop ((name of container)) -> Stops a specified container 
-        - start ((name of container)) -> Start a specified container 
+        - start ((name of container)) -> Start a specified container _
     - Servers:
         - update
         - upgrade

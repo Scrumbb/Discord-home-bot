@@ -1,5 +1,11 @@
 
 const { SlashCommandBuilder } = require('discord.js');
+const { executeRemoteCommand } = require('../../functions/sshExecutor');
+const { responseFormater } = require('../../functions/responseFormater');
+const fs = require('fs');
+const path = require('path');
+
+const privateKeyPath = path.join(__dirname, '..', '..', 'id_rsa');
 
 module.exports = {
 	cooldown: 5,
@@ -13,15 +19,176 @@ module.exports = {
 				.addChoices(
 					{ name: 'pi5', value: 'pi5' },
 					{ name: 'ubuntu', value: 'ubuntu' })),
+
 	async execute(interaction) {
+
 		const category = interaction.options.getString('server');
-		
+
+		let response = '```';
+
 		if (category === 'pi5') {
-			await interaction.reply(`Docker containers on Raspberry Pi 5`);
+
+			await interaction.reply('```Runnig docker ls on Raspberry Pi 5```');
+
+			await executeRemoteCommand('10.0.0.184', 22, 'bot', privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
+				.then(output => {
+					response += output;
+				})
+				.catch(err => {
+					console.log('Error:', err.message);
+					response += err.message;
+				});
+			//response += '```';
+
+			/* 
+			if (response.length > 1900) {
+
+				const linesArray = response.split('\n');
+				response = '';
+
+				linesArray.forEach((line) => {
+					if ((response + line).length > 1900) {
+						response += '```';
+						interaction.followUp(`${response}`);
+						response = '```';
+						response += line;
+						response += '\n';
+					} else {
+						response += line;
+						response += '\n';
+					}
+				});
+
+			}
+			//response += '```';
+			await interaction.followUp(`${response}`); 
+			*/
+
+			try {
+				const responseArray = responseFormater(response, false);
+				responseArray.forEach((message) => {
+					interaction.followUp(`${message}`);
+				});
+			} catch (error) {
+				console.error('Error:', error.message);
+			}
+
 		} else if (category === 'ubuntu') {
-			await interaction.reply(`Docker containers on Ubuntu Vm`);
+
+			await interaction.reply('```Runnig docker ls on Ubuntu VM```');
+
+			await executeRemoteCommand('10.0.0.150', 22, 'bot', privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
+				.then(output => {
+					response += output;
+				})
+				.catch(err => {
+					console.error('Error:', err.message);
+					response += err;
+				});
+			//response += '```';
+			/* 
+			if (response.length > 1900) {
+			
+				const linesArray = response.split('\n');
+				response = '';
+			
+				linesArray.forEach((line) => {
+					if ((response + line).length > 1900) {
+						response += '```';
+						interaction.followUp(`${response}`);
+						response = '```';
+						response += line;
+						response += '\n';
+					} else {
+						response += line;
+						response += '\n';
+					}
+				});
+			}
+			//response += '```';
+			await interaction.followUp(`${response}`);
+			 */
+
+			try {
+				const responseArray = responseFormater(response, false);
+				responseArray.forEach((message) => {
+					interaction.followUp(`${message}`);
+				});
+			} catch (error) {
+				console.error('Error:', error.message);
+			}
+
 		} else {
-			await interaction.reply(`Docker containers on all servers`);
+
+			await interaction.reply('```Runnig docker ls on all Servers```');
+
+			await executeRemoteCommand('10.0.0.184', 22, 'bot', privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
+				.then(output => {
+					response += output;
+				})
+				.catch(err => {
+					console.log('Error:', err.message);
+					response += err.message;
+				});
+			response += '\v';
+
+			await executeRemoteCommand('10.0.0.150', 22, 'bot', privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
+				.then(output => {
+					response += output;
+				})
+				.catch(err => {
+					console.log('Error:', err.message);
+					response += err.message;
+				});
+
+			//response += '```';
+			/* 
+			if (response.length > 1800) {
+
+				const serversArray = response.split('\v');
+				response = '';
+			
+				serversArray.forEach((server) => {
+					if (server.length > 1900) {
+						response += '```';
+						interaction.followUp(`${response}`);
+						response = '```';
+						response += server;
+						response += '\n';
+					} else {
+						response += '```';
+						interaction.followUp(`${response}`);
+					}
+				});
+			
+				const linesArray = response.split('\n');
+				response = '';
+			
+				linesArray.forEach((line) => {
+					if ((response + line).length > 1500) {
+						response += '```';
+						interaction.followUp(`${response}`);
+						response = '```';
+						response += line;
+						response += '\n';
+					} else {
+						response += line;
+						response += '\n';
+					}
+				});
+			}
+			response += '```';
+			await interaction.followUp(`${response}`); 
+			*/
+
+			try {
+				const responseArray = responseFormater(response, true);
+				responseArray.forEach((message) => {
+					interaction.followUp(`${message}`);
+				});
+			} catch (error) {
+				console.error('Error:', error.message);
+			}
 		}
 	},
 };
