@@ -19,7 +19,7 @@ function responseFormater(response, multipleServers) {
     let responseArray = [];
 
     if (multipleServers) {
-        const serversArray = response.split('\v');
+        const serversArray = response.split('\v\v\v');
         response = '';
 
         serversArray.forEach((server) => {

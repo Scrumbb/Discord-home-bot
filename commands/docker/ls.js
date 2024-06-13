@@ -5,6 +5,8 @@ const { responseFormater } = require('../../functions/responseFormater');
 const fs = require('fs');
 const path = require('path');
 
+const servers = require('../../config.json');
+
 const privateKeyPath = path.join(__dirname, '..', '..', 'id_rsa');
 
 module.exports = {
@@ -30,7 +32,7 @@ module.exports = {
 
 			await interaction.reply('```Runnig docker ls on Raspberry Pi 5```');
 
-			await executeRemoteCommand('10.0.0.184', 22, 'bot', privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
+			await executeRemoteCommand(servers.pi5Ip, servers.pi5Port, servers.pi5Username, privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
 				.then(output => {
 					response += output;
 				})
@@ -53,7 +55,7 @@ module.exports = {
 
 			await interaction.reply('```Runnig docker ls on Ubuntu VM```');
 
-			await executeRemoteCommand('10.0.0.150', 22, 'bot', privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
+			await executeRemoteCommand(servers.ubuntuIp, servers.ubuntuPort, servers.ubuntuUsername, privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
 				.then(output => {
 					response += output;
 				})
@@ -76,7 +78,7 @@ module.exports = {
 
 			await interaction.reply('```Runnig docker ls on all Servers```');
 
-			await executeRemoteCommand('10.0.0.184', 22, 'bot', privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
+			await executeRemoteCommand(servers.pi5Ip, servers.pi5Port, servers.pi5Username, privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
 				.then(output => {
 					response += output;
 				})
@@ -87,7 +89,7 @@ module.exports = {
 				});
 			response += '\v\v\v';
 
-			await executeRemoteCommand('10.0.0.150', 22, 'bot', privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
+			await executeRemoteCommand(servers.ubuntuIp, servers.ubuntuPort, servers.ubuntuUsername, privateKeyPath, `docker container ls -a --format "table {{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}"`)
 				.then(output => {
 					response += output;
 				})
