@@ -56,6 +56,8 @@ function executeRemoteCommand(ip, port, username, privateKeyPath, command) {
                     stderr += data;
                 });
             });
+        }).on('error', (err) => {
+            return reject(err);
         }).connect({
             host: ip,
             port: port,

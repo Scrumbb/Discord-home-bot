@@ -35,7 +35,8 @@ module.exports = {
 					response += output;
 				})
 				.catch(err => {
-					console.log('Error:', err.message);
+					console.error('Error:', err.message);
+					response += 'Error: ';
 					response += err.message;
 				});
 
@@ -58,6 +59,7 @@ module.exports = {
 				})
 				.catch(err => {
 					console.error('Error:', err.message);
+					response += 'Error: ';
 					response += err;
 				});
 
@@ -79,7 +81,8 @@ module.exports = {
 					response += output;
 				})
 				.catch(err => {
-					console.log('Error:', err.message);
+					console.error('Error:', err.message);
+					response += 'Error: ';
 					response += err.message;
 				});
 			response += '\v\v\v';
@@ -89,7 +92,8 @@ module.exports = {
 					response += output;
 				})
 				.catch(err => {
-					console.log('Error:', err.message);
+					console.error('Error:', err.message);
+					response += 'Error: ';
 					response += err.message;
 				});
 
