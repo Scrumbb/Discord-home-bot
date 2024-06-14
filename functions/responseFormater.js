@@ -25,19 +25,19 @@ function responseFormater(response, multipleServers) {
         serversArray.forEach((server) => {
             if (server.length < 1900) {
                 response += server;
-                response += '```';
+                response += '\`\`\`';
                 responseArray = responseArray.concat(response);
-                response = '```';
+                response = '\`\`\`';
             } else {
                 response += server;
                 responseArray = responseArray.concat(splitSingleServer(response));
-                response = '```';
+                response = '\`\`\`';
             }
         });
 
     } else {
         if (response.length < 1900) {
-            return [response += '```'];
+            return [response += '\`\`\`'];
         }
 
         responseArray = responseArray.concat(splitSingleServer(response));
@@ -57,18 +57,18 @@ function splitSingleServer(response) {
         if (zone.length < 1900) {
             if (zone != '') {
                 response += zone;
-                response += '```';
+                response += '\`\`\`';
                 splitArray = splitArray.concat(response);
-                response = '```';
+                response = '\`\`\`';
             }
         } else {
             const linesArray = zone.split('\n');
 
             linesArray.forEach((line) => {
                 if ((response + line).length > 1900) {
-                    response += '```';
+                    response += '\`\`\`';
                     splitArray = splitArray.concat(response);
-                    response = '```';
+                    response = '\`\`\`';
                     response += line;
                     response += '\n';
                 } else {

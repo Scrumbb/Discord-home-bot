@@ -10,8 +10,8 @@ const privateKeyPath = path.join(__dirname, '..', '..', 'id_rsa');
 module.exports = {
     cooldown: 5,
     data: new SlashCommandBuilder()
-        .setName('start')
-        .setDescription('Starts a specified docker container on the specified server')
+        .setName('restart')
+        .setDescription('Restarts a specified docker container on the specified server')
         .addStringOption(option =>
             option
                 .setName('name')
@@ -34,9 +34,9 @@ module.exports = {
 
 		if (server === 'pi5') {
 
-			await interaction.reply(`\`\`\`Starting docker container ${name} on Raspberry Pi 5\`\`\``);
+			await interaction.reply(`\`\`\`Restarting docker container ${name} on Raspberry Pi 5\`\`\``);
 
-			await executeRemoteCommand(servers.pi5Ip, servers.pi5Port, servers.pi5Username, privateKeyPath, `docker start ${name}`)
+			await executeRemoteCommand(servers.pi5Ip, servers.pi5Port, servers.pi5Username, privateKeyPath, `docker restart ${name}`)
 				.then(output => {
 					response += output;
 				})
@@ -57,9 +57,9 @@ module.exports = {
 
 		} else if (server === 'ubuntu') {
 
-			await interaction.reply(`\`\`\`Starting docker container ${name} on Ubuntu VM\`\`\``);
+			await interaction.reply(`\`\`\`Restarting docker container ${name} on Ubuntu VM\`\`\``);
 
-			await executeRemoteCommand(servers.ubuntuIp, servers.ubuntuPort, servers.ubuntuUsername, privateKeyPath, `docker start ${name}`)
+			await executeRemoteCommand(servers.ubuntuIp, servers.ubuntuPort, servers.ubuntuUsername, privateKeyPath, `docker restart ${name}`)
 				.then(output => {
 					response += output;
 				})
