@@ -4,7 +4,8 @@ const { executeRemoteCommand } = require('../../functions/sshExecutor');
 const { responseFormater } = require('../../functions/responseFormater');
 const path = require('path');
 
-const servers = require('../../config.json');
+const configPath = path.join(__dirname, '..', '..', 'config.json');
+const servers  = require(configPath);
 
 const privateKeyPath = path.join(__dirname, '..', '..', 'id_rsa');
 
