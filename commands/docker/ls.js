@@ -26,7 +26,7 @@ module.exports = {
 
 		const server = interaction.options.getString('server');
 
-		let response = '\`\`\`';
+		let response = '\`\`\`\n';
 
 		if (server === 'pi5') {
 

@@ -19,9 +19,26 @@ function executeRemoteCommand(ip, port, username, privateKeyPath, command) {
         let stderr = '';
 
         conn.on('ready', () => {
-            stdout += `-------------------------------------------------------------------\n`;
-            stdout += `----- Connection ${ip} established! -----\n`;
-            stdout += `------------------------------------------------------------\n\n`;
+
+            let character = '-';
+            let lineText = `Connection ${ip} established!`;
+            let lineLenght = lineText.length
+            let commandText = command.replace(/\t/g, '\\t');
+            //let commandLenght = command.includes('\t') ? command.length + (command.split('\t').length - 1) * 3 : command.length;
+            let commandLenght = command.length;
+            let biggestLine = lineLenght > commandLenght ? lineLenght : commandLenght;
+
+            biggestLine += 16;
+
+            stdout += `\n`;
+            stdout += character.repeat(biggestLine);
+            stdout += `\n`;
+
+            let lineToFormat = `Connection ${ip} established!`;
+            stdout += formatSingleLine(lineToFormat, biggestLine, character);
+
+            stdout += character.repeat(biggestLine);
+            stdout += `\n\n`;
 
             conn.exec(command, (err, stream) => {
 
@@ -30,17 +47,31 @@ function executeRemoteCommand(ip, port, username, privateKeyPath, command) {
                     return reject(err);
                 }
                 else {
-                    stdout += `---------------------------------------------------------------\n`;
-                    stdout += `----------- Running: --------------\n`;
-                    stdout += `----------- ${command} --------------\n`;
-                    stdout += `---------------------------------------------------------------\n\n\t\t\t`;
+                    stdout += character.repeat(biggestLine);
+                    stdout += `\n`;
+
+                    lineToFormat = `Running:`;
+                    stdout += formatSingleLine(lineToFormat, biggestLine, character);
+                    lineToFormat = `${commandText}`;
+                    stdout += formatSingleLine(lineToFormat, biggestLine, character);
+
+                    stdout += character.repeat(biggestLine);
+                    stdout += `\n\t\t\t\n`;
                 }
                 stream.on('close', (code, signal) => {
                     stdout += `\t\t\t`;
-                    stdout += `\n-----------------------------------------------------------\n`;
-                    stdout += `-------- Connection ${ip} closed! -------\n`;
-                    stdout += `---------------------- Code: ${code} ----------------------\n`;
-                    stdout += `-------------------------------------------------------------\n\n\t\t\t`;
+                    stdout += `\n`;
+                    stdout += character.repeat(biggestLine);
+                    stdout += `\n`;
+
+                    
+                    lineToFormat = `Connection ${ip} closed!`;
+                    stdout += formatSingleLine(lineToFormat, biggestLine, character);
+                    lineToFormat = `Code: ${code}`;
+                    stdout += formatSingleLine(lineToFormat, biggestLine, character);
+
+                    stdout += character.repeat(biggestLine);
+                    stdout += `\n\n\t\t\t`;
 
                     conn.end();
 
@@ -65,6 +96,36 @@ function executeRemoteCommand(ip, port, username, privateKeyPath, command) {
             privateKey: privateKey
         });
     });
+}
+
+function formatSingleLine(line, size, character){
+    let sizeOfCharactersSpace = size - line.length - 2;
+
+    if ((sizeOfCharactersSpace) % 2 != 0){
+        const firstPart = Math.ceil((sizeOfCharactersSpace) / 2);
+        const secondPart = sizeOfCharactersSpace - firstPart;
+
+        let formatedLine = '';
+        
+        formatedLine += character.repeat(firstPart);
+        formatedLine += ` ${line} `;
+        formatedLine += character.repeat(secondPart);
+        formatedLine += `\n`;
+
+        return formatedLine;
+    }
+    else{
+        const division = Math.floor((sizeOfCharactersSpace) / 2);
+
+        let formatedLine = '';
+        
+        formatedLine += character.repeat(division);
+        formatedLine += ` ${line} `;
+        formatedLine += character.repeat(division);
+        formatedLine += `\n`;
+
+        return formatedLine;
+    }
 }
 
 module.exports = { executeRemoteCommand };

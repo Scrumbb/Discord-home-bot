@@ -51,6 +51,9 @@ function splitSingleServer(response) {
     let splitArray = [];
 
     const zonesArray = response.split('\t\t\t');
+
+    
+
     response = '';
 
     zonesArray.forEach((zone) => {
